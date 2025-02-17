@@ -11,6 +11,14 @@ const geist = Geist({
 export const metadata: Metadata = {
   title: "Dev Club Recruitment",
   description: "Join our community",
+  icons: {
+    icon: [
+      {
+        url: '/favicon.ico',
+        sizes: 'any',
+      },
+    ],
+  },
 };
 
 export default function RootLayout({
