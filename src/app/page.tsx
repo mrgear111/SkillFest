@@ -69,26 +69,39 @@ export default function Home() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
           <CategoryCard
-            title="Developer"
-            description="Join our development team and contribute to exciting projects"
+            title="Developer 🚀"
+            description="Passionate about development? This is your chance to be part of something bigger!"
             icon={<Code className="w-6 h-6 text-[#238636]" />}
             points={[
-              "Work on real-world projects",
-              "Learn modern technologies",
-              "Collaborate with other developers"
+              "Prove Your Skills – You have 1 week (Deadline: 17/03/25) to showcase your contributions.",
+              "Requirement – Raise at least PRs and get PRs merged to qualify.",
+              "Leaderboard Tracking – We will keep track of your progress through our club leaderboard."
             ]}
           />
-          
+
           <CategoryCard
-            title="Creative Lead"
-            description="Lead our creative initiatives and shape our brand identity"
-            icon={<Palette className="w-6 h-6 text-[#F778BA]" />}
+            title="Fresher 🌟"
+            description="You’re welcome here—even if you don’t have much experience in development! If you’re passionate about learning, growing, and making an impact, this is your chance."
+            icon={<Code className="w-6 h-6 text-[#238636]" />}
             points={[
-              "Design brand assets",
-              "Create visual content",
-              "Lead creative projects"
+              "No prior experience? No problem! We value dedication over expertise.",
+              "Make a Difference – Contribute to meaningful initiatives that shape our club.",
+              "🚀 Limited seats available! If you're eager to learn and create, apply now."
             ]}
           />
+
+          <div className="flex justify-center w-full md:col-span-2">
+            <CategoryCard
+              title="🎨 Designer"
+              description="Passionate about design? This is your chance!"
+              icon={<Palette className="w-6 h-6 text-[#F778BA]" />}
+              points={[
+                "Task: Design a club logo that represents our vision and identity.",
+                "Deadline: Submit your design by 17/03/2025.",
+                "Limited Spots: Only the best designs will secure a place."
+              ]}
+            />
+          </div>
         </div>
 
         <div className="mt-32 max-w-6xl mx-auto">
@@ -266,6 +279,11 @@ function CategoryCard({
     if (!session) {
       e.preventDefault();
       setShowLoginPopup(true);
+    } else {
+      if (title === "Fresher 🌟") {
+        e.preventDefault();
+        window.location.href = "/fresher";
+      }
     }
   };
 
@@ -317,8 +335,9 @@ function CategoryCard({
         {/* Apply Button */}
         <Link 
           href={session ? (
-            title === "Developer" ? "/skillfest" : 
-            title === "Creative Lead" ? "/creative" :
+            title === "Developer 🚀" ? "/skillfest" : 
+            title === "🎨 Designer" ? "/creative" :
+            title === "Fresher 🌟" ? "/fresher" :
             "/register"
           ) : "#"}
           onClick={handleClick}
