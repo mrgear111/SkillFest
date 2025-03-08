@@ -1,12 +1,14 @@
 'use client';
 
 import { useState } from 'react';
-import { createClient } from '@supabase/supabase-js';
 import { useRouter } from 'next/navigation';
+import { createClient } from '@supabase/supabase-js';
 
-const supabaseUrl = 'https://ydkacdyvzjaopxrtgdpb.supabase.co';
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inlka2FjZHl2emphb3B4cnRnZHBiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDEzNTg5NTksImV4cCI6MjA1NjkzNDk1OX0.19eict10rtJRDmD99CTThR-ceSIXQ-8NW1CqZtSaqg0';
-const supabase = createClient(supabaseUrl, supabaseKey);
+
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL || '',
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
+);
 
 export default function FresherForm() {
   const [formData, setFormData] = useState({
@@ -18,7 +20,6 @@ export default function FresherForm() {
     projectLink2: '',
     reason: ''
   });
-  const [error, setError] = useState<string | null>(null);
   const router = useRouter();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -28,17 +29,27 @@ export default function FresherForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const { name, email, githubUrl, pastExperience, projectLink1, projectLink2, reason } = formData;
 
-    const { error } = await supabase
-      .from('fresher_applications')
-      .insert([{ name, email, github_url: githubUrl, past_experience: pastExperience, project_link_1: projectLink1, project_link_2: projectLink2, reason }]);
+    const { data, error } = await supabase
+      .from('FresherForm')
+      .insert([
+        {
+          name: formData.name,
+          email_id: formData.email,
+          github_url: formData.githubUrl,
+          past_experience: formData.pastExperience,
+          project_link_1: formData.projectLink1,
+          project_link_2: formData.projectLink2,
+          reason: formData.reason
+        }
+      ]);
 
     if (error) {
-      console.error('Error submitting form:', error);
-      setError('Error submitting form. Please try again.');
+      console.error('Supabase Error:', error);
     } else {
-      router.push('/thaku');
+      console.log('Form submitted successfully:', data);
+      
+      router.push('/thankyou');
     }
   };
 
@@ -46,11 +57,6 @@ export default function FresherForm() {
     <div className="min-h-screen bg-[#0d1117] flex items-center justify-center">
       <form onSubmit={handleSubmit} className="bg-[#161b22] p-8 rounded-lg shadow-md w-full max-w-lg">
         <h2 className="text-2xl font-bold text-white mb-6">Fresher Application Form</h2>
-        {error && (
-          <div className="mb-4 p-4 bg-red-500 text-white rounded">
-            {error}
-          </div>
-        )}
         <div className="mb-4">
           <label className="block text-[#8b949e] mb-2" htmlFor="name">Name</label>
           <input
@@ -88,7 +94,7 @@ export default function FresherForm() {
           />
         </div>
         <div className="mb-4">
-          <label className="block text-[#8b949e] mb-2" htmlFor="pastExperience">Past Experience in Web Development (if any)</label>
+          <label className="block text-[#8b949e] mb-2" htmlFor="pastExperience">Past Experience</label>
           <textarea
             id="pastExperience"
             name="pastExperience"
@@ -98,7 +104,7 @@ export default function FresherForm() {
           />
         </div>
         <div className="mb-4">
-          <label className="block text-[#8b949e] mb-2" htmlFor="projectLink1">Project Link 1 (if any)</label>
+          <label className="block text-[#8b949e] mb-2" htmlFor="projectLink1">Project Link 1</label>
           <input
             type="url"
             id="projectLink1"
@@ -109,7 +115,7 @@ export default function FresherForm() {
           />
         </div>
         <div className="mb-4">
-          <label className="block text-[#8b949e] mb-2" htmlFor="projectLink2">Project Link 2 (if any)</label>
+          <label className="block text-[#8b949e] mb-2" htmlFor="projectLink2">Project Link 2</label>
           <input
             type="url"
             id="projectLink2"
