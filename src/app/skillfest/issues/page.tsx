@@ -131,7 +131,7 @@ function SignInPrompt() {
     <div className="text-center">
       <div className="max-w-sm mx-auto p-8 rounded-lg border border-[#30363d] bg-[#161b22] backdrop-blur-sm">
         <Github className="w-16 h-16 text-[#8b949e] mx-auto mb-6" />
-        <h3 className="text-xl font-bold text-white mb-4">Join SkillFest 2024</h3>
+        <h3 className="text-xl font-bold text-white mb-4">Join SkillFest 2025</h3>
         <p className="text-[#8b949e] mb-6">
           Sign in with GitHub to start your journey and track your progress
         </p>
