@@ -383,7 +383,7 @@ export default function AdminPortal() {
     if (isAuthenticated) {
       fetchUsers();
     }
-  }, [isAuthenticated]);
+  }, [isAuthenticated, fetchUsers]);
 
   const handleLogin = async () => {
     if (password === ADMIN_PASSWORD) {

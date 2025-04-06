@@ -1,7 +1,6 @@
 'use client';
 
-import { SignInButton } from "@/components/sign-in-button";
-import { ArrowRight, Code, Sparkles, Zap, Trophy, Users, GitBranch, GitPullRequest, Check } from "lucide-react";
+import { ArrowRight, Code, Sparkles, Zap, Trophy, Users, GitPullRequest, Check } from "lucide-react";
 import Link from "next/link";
 import { useState } from 'react';
 import { useSession } from "next-auth/react";
@@ -17,55 +16,44 @@ export default function Home() {
       <main className="container mx-auto px-4 py-16 relative z-10">
         <div className="text-center mb-20 space-y-6">
           <div className="inline-block">
-            <span className="bg-[#F778BA] text-white text-sm font-medium px-4 py-1.5 rounded-full">
-              SkillFest 2025 is Live 🚀
+            <span className="bg-[#30363d] text-[#8b949e] text-sm font-medium px-4 py-1.5 rounded-full flex items-center gap-2">
+              <Trophy className="w-4 h-4 text-[#238636]" />
+              SkillFest 2025 Has Concluded 🎉
             </span>
           </div>
           <h1 className="text-5xl md:text-7xl font-bold mb-4 gradient-text">
             SkillFest 2025
           </h1>
           <p className="text-xl text-[#8b949e] max-w-2xl mx-auto">
-            Join our elite team of developers, designers, and creators
+            Thank you to all participants! Selected candidates will be announced soon.
           </p>
 
-          {/* New: Quick Info Cards */}
+          {/* Results Summary */}
           <div className="flex flex-wrap justify-center gap-4 mt-8">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#161b22] border border-[#30363d]">
-              <GitBranch className="w-4 h-4 text-[#238636]" />
-              <span className="text-[#8b949e]">7 Days Challenge</span>
+              <Trophy className="w-4 h-4 text-[#238636]" />
+              <span className="text-[#8b949e]">15 Selected</span>
+            </div>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#161b22] border border-[#30363d]">
+              <GitPullRequest className="w-4 h-4 text-[#238636]" />
+              <span className="text-[#8b949e]">508+ Points Earned</span>
             </div>
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#161b22] border border-[#30363d]">
               <Users className="w-4 h-4 text-[#238636]" />
-              <span className="text-[#8b949e]">20 Team Positions</span>
-            </div>
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#161b22] border border-[#30363d]">
-              <Trophy className="w-4 h-4 text-[#238636]" />
-              <span className="text-[#8b949e]">Top Performers Rewarded</span>
+              <span className="text-[#8b949e]">Amazing Contributions</span>
             </div>
           </div>
           
-          {/* New: How to Apply Section */}
-          <div className="mt-8 inline-block text-center p-4 rounded-lg bg-[#161b22] border border-[#30363d]">
-            <p className="text-[#8b949e] mb-4">
-              👉 Sign in with GitHub and choose &quot;Developer&quot; to join SkillFest
-            </p>
-            <SignInButton />
-          </div>
-
-          {/* New: Quick Steps */}
-          <div className="flex flex-wrap justify-center gap-8 mt-8">
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-full bg-[#238636]/10 flex items-center justify-center text-[#238636] font-medium">1</div>
-              <span className="text-[#8b949e]">Sign in</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-full bg-[#238636]/10 flex items-center justify-center text-[#238636] font-medium">2</div>
-              <span className="text-[#8b949e]">Select Developer</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-full bg-[#238636]/10 flex items-center justify-center text-[#238636] font-medium">3</div>
-              <span className="text-[#8b949e]">Start Contributing</span>
-            </div>
+          {/* View Results Button */}
+          <div className="mt-8 inline-block text-center">
+            <Link 
+              href="/skillfest/leaderboard"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-[#161b22] border border-[#238636] text-white hover:bg-[#238636]/10 transition-all duration-300"
+            >
+              <Trophy className="w-5 h-5" />
+              View Final Results
+              <ArrowRight className="w-5 h-5" />
+            </Link>
           </div>
         </div>
 
@@ -76,8 +64,8 @@ export default function Home() {
           <div className="absolute -bottom-20 -right-20 w-40 h-40 bg-[#A371F7]/10 rounded-full blur-3xl opacity-30" />
           
           <div className="text-center mb-10">
-            <h2 className="text-4xl font-bold mb-3 bg-gradient-to-r from-[#238636] via-white to-[#A371F7] inline-block text-transparent bg-clip-text">Choose Your Path</h2>
-            <p className="text-[#8b949e] max-w-2xl mx-auto">Select the program that best matches your experience level and goals</p>
+            <h2 className="text-4xl font-bold mb-3 bg-gradient-to-r from-[#238636] via-white to-[#A371F7] inline-block text-transparent bg-clip-text">Final Results</h2>
+            <p className="text-[#8b949e] max-w-2xl mx-auto">Congratulations to all participants for their amazing contributions!</p>
           </div>
           
           <div className="p-8 rounded-2xl bg-gradient-to-br from-[#161b22] to-[#0d1117] border border-[#30363d] shadow-xl relative overflow-hidden">
@@ -157,12 +145,12 @@ export default function Home() {
                     </div>
                   </div>
                   
-                  <div className="absolute top-2 right-2 px-3 py-1 rounded-full bg-[#A371F7]/10 text-[#A371F7] text-xs font-medium">
-                    5 positions
+                  <div className="absolute top-2 right-2 px-3 py-1 rounded-full bg-[#30363d] text-[#8b949e] text-xs font-medium">
+                    Applications Closed
                   </div>
                   
                   <p className="text-[#8b949e] mb-6 group-hover:text-white transition-colors duration-300">
-                    New to coding? Apply to our Fresher Developer program with limited seats to learn as you contribute.
+                    Applications for the Fresher Developer program are now closed. Thank you for your interest!
                   </p>
                   
                   <ul className="space-y-3 mb-6">
@@ -170,28 +158,15 @@ export default function Home() {
                       <div className="p-1 mt-0.5 rounded-full bg-[#A371F7]/20 flex-shrink-0">
                         <Check className="w-3 h-3 text-[#A371F7]" />
                       </div>
-                      <span>No experience required</span>
+                      <span>Selected candidates will be announced soon</span>
                     </li>
                     <li className="flex items-start gap-3 text-[#8b949e] group-hover:text-white transition-colors duration-300">
                       <div className="p-1 mt-0.5 rounded-full bg-[#A371F7]/20 flex-shrink-0">
                         <Check className="w-3 h-3 text-[#A371F7]" />
                       </div>
-                      <span>Mentorship from senior developers</span>
-                    </li>
-                    <li className="flex items-start gap-3 text-[#8b949e] group-hover:text-white transition-colors duration-300">
-                      <div className="p-1 mt-0.5 rounded-full bg-[#A371F7]/20 flex-shrink-0">
-                        <Check className="w-3 h-3 text-[#A371F7]" />
-                      </div>
-                      <span>Learn at your own pace with beginner-friendly tasks</span>
+                      <span>Stay tuned for future opportunities</span>
                     </li>
                   </ul>
-                  
-                  <div className="pt-4 border-t border-[#30363d]">
-                    <div className="flex items-center gap-2 text-[#8b949e]">
-                      <Users className="w-4 h-4 text-[#A371F7]" />
-                      <span>Limited positions available for beginners</span>
-                    </div>
-                  </div>
                 </div>
               </div>
             </div>
