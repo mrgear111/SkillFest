@@ -23,22 +23,6 @@ type Contributor = {
   };
 };
 
-// Add types for the API response
-type UserResponse = {
-  login: string;
-  stats: {
-    totalPRs: number;
-    mergedPRs: number;
-    contributions: number;
-    orgPRs?: number;
-    orgMergedPRs?: number;
-    points?: number;
-    level?: string;
-    manualRank?: number;
-    hidden?: boolean;
-  };
-};
-
 // Add leaderboard settings type
 type LeaderboardSettings = {
   visible: boolean;
@@ -81,50 +65,117 @@ export default function Leaderboard() {
   }, []);
 
   const fetchUsers = useCallback(async () => {
-    try {
-      const response = await fetch('/api/logged-in-users');
-      const data = await response.json();
-      
-      // Filter out hidden users
-      const visibleUsers = data.filter((user: UserResponse) => !user.stats.hidden);
-      
-      // Sort users by points and manual ranks
-      const sortedUsers = visibleUsers.sort((a: UserResponse, b: UserResponse) => {
-        // If both have manual ranks, sort by manual rank
-        if (a.stats.manualRank && b.stats.manualRank) {
-          return a.stats.manualRank - b.stats.manualRank;
-        }
-        // If only one has manual rank, prioritize that one
-        if (a.stats.manualRank) return -1;
-        if (b.stats.manualRank) return 1;
-        
-        // Otherwise sort by points
-        return (b.stats.points || 0) - (a.stats.points || 0);
-      });
-      // uncomment block below to sort by points
-      // Map and assign ranks
-      const mappedUsers = sortedUsers.map((user: UserResponse, index: number) => ({
-        login: user.login,
-        avatar_url: `https://avatars.githubusercontent.com/${user.login}`,
-        html_url: `https://github.com/${user.login}`,
-        rank: user.stats.manualRank || index + 1, // Use manual rank or calculated rank
-        contributions: user.stats.contributions || 0,
-        points: user.stats.points || 0,
-        level: user.stats.level || 'Newcomer',
-        pullRequests: {
-          // total: user.stats.totalPRs || 0,
-          // merged: user.stats.mergedPRs || 0,
-          orgTotal: user.stats.orgPRs || 0,
-          orgMerged: user.stats.orgMergedPRs || 0
-        }
-      }));
-      
-      setContributors(mappedUsers);
-      setLoading(false);
-    } catch (error) {
-      console.error("Error fetching users:", error);
-      setLoading(false);
-    }
+    // Return final list of users instead of fetching
+    const finalUsers = [
+      {
+        login: "SravanthDev",
+        points: 508,
+        level: "Expert",
+        rank: 1
+      },
+      {
+        login: "prempyla",
+        points: 212,
+        level: "Advanced",
+        rank: 2
+      },
+      {
+        login: "RithwikBejadi",
+        points: 209,
+        level: "Advanced",
+        rank: 3
+      },
+      {
+        login: "Jadu07",
+        points: 180,
+        level: "Advanced",
+        rank: 4
+      },
+      {
+        login: "sammy200-ui",
+        points: 132,
+        level: "Intermediate",
+        rank: 5
+      },
+      {
+        login: "quick-harsh",
+        points: 104,
+        level: "Intermediate",
+        rank: 6
+      },
+      {
+        login: "parth10P",
+        points: 104,
+        level: "Intermediate",
+        rank: 7
+      },
+      {
+        login: "shalini-saloni",
+        points: 85,
+        level: "Intermediate",
+        rank: 8
+      },
+      {
+        login: "Rudrxxx",
+        points: 84,
+        level: "Intermediate",
+        rank: 9
+      },
+      {
+        login: "hk2166",
+        points: 56,
+        level: "Beginner",
+        rank: 10
+      },
+      {
+        login: "NssGourav",
+        points: 56,
+        level: "Beginner",
+        rank: 11
+      },
+      {
+        login: "mrsandy1965",
+        points: 28,
+        level: "Beginner",
+        rank: 12
+      },
+      {
+        login: "ananyapandey9895",
+        points: 28,
+        level: "Beginner",
+        rank: 13
+      },
+      {
+        login: "manameaaus",
+        points: 8,
+        level: "Newcomer",
+        rank: 14
+      },
+      {
+        login: "GreenHacker04",
+        points: 7,
+        level: "Newcomer",
+        rank: 15
+      }
+    ];
+
+    const mappedUsers = finalUsers.map(user => ({
+      login: user.login,
+      avatar_url: `https://avatars.githubusercontent.com/${user.login}`,
+      html_url: `https://github.com/${user.login}`,
+      rank: user.rank,
+      points: user.points,
+      level: user.level,
+      pullRequests: {
+        total: 0,
+        merged: 0,
+        orgTotal: 0,
+        orgMerged: 0
+      }
+    }));
+
+    setContributors(mappedUsers);
+    setLoading(false);
   }, []);
 
   // Refresh user stats
@@ -184,7 +235,56 @@ export default function Leaderboard() {
         
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-white">SkillFest Leaderboard</h1>
-          <p className="text-[#8b949e] mt-2">Top contributors will be selected to join the club</p>
+          <p className="text-[#8b949e] mt-2">Congratulations to all participants! 🎉</p>
+          
+          {/* Add congratulatory banner */}
+          <div className="mt-8 p-6 bg-gradient-to-r from-[#F778BA]/20 to-[#30363d] rounded-lg border border-[#F778BA]/30">
+            <h2 className="text-2xl font-bold text-white mb-4">🏆 Final Results!</h2>
+            <p className="text-[#8b949e] mb-6">Thank you to everyone who participated in SkillFest. Your contributions have been amazing!</p>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {/* Gold Winner */}
+              <div className="bg-[#161b22] p-4 rounded-lg border border-yellow-600/30">
+                <div className="text-4xl mb-2">🥇</div>
+                <div className="font-bold text-yellow-400">SravanthDev</div>
+                <div className="text-[#8b949e]">508 points</div>
+              </div>
+              
+              {/* Silver Winner */}
+              <div className="bg-[#161b22] p-4 rounded-lg border border-gray-400/30">
+                <div className="text-4xl mb-2">🥈</div>
+                <div className="font-bold text-gray-400">prempyla</div>
+                <div className="text-[#8b949e]">212 points</div>
+              </div>
+              
+              {/* Bronze Winner */}
+              <div className="bg-[#161b22] p-4 rounded-lg border border-amber-700/30">
+                <div className="text-4xl mb-2">🥉</div>
+                <div className="font-bold text-amber-700">RithwikBejadi</div>
+                <div className="text-[#8b949e]">209 points</div>
+              </div>
+            </div>
+            
+            {/* Other Top Performers */}
+            <div className="mt-6 grid grid-cols-2 md:grid-cols-4 gap-4">
+              <div className="bg-[#161b22] p-3 rounded-lg">
+                <div className="font-medium text-white">Jadu07 🏅</div>
+                <div className="text-sm text-[#8b949e]">180 points</div>
+              </div>
+              <div className="bg-[#161b22] p-3 rounded-lg">
+                <div className="font-medium text-white">sammy200-ui 🏅</div>
+                <div className="text-sm text-[#8b949e]">132 points</div>
+              </div>
+              <div className="bg-[#161b22] p-3 rounded-lg">
+                <div className="font-medium text-white">quick-harsh 🏅</div>
+                <div className="text-sm text-[#8b949e]">104 points</div>
+              </div>
+              <div className="bg-[#161b22] p-3 rounded-lg">
+                <div className="font-medium text-white">parth10P 🏅</div>
+                <div className="text-sm text-[#8b949e]">104 points</div>
+              </div>
+            </div>
+          </div>
         </div>
         
         <div className="mb-8 flex items-center justify-between">
